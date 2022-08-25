@@ -163,8 +163,10 @@ class SpaceBot:
         else:
             if issue_id:
                 logging.error('There is no tag at this name')
-            elif tag_id:
-                logging.error(f'There is no issue number {issue_number} at board {board_name}')
+            elif tag_id and issues:
+                logging.error(f'There is no issue number {issue_number} but issues is not empty!')
+            elif tag_id and board_name:
+                logging.error(f'There is no issue number {issue_number} at board {board_name}!')
             else:
                 logging.error('Tag name and issue number are invalid!')
 
