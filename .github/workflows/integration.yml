@@ -1,0 +1,25 @@
+name: Smoke Test
+on: [ push, pull_request ]
+jobs:
+  build:
+    name: Smoke Testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Self test
+        id: selftest
+
+        uses: Dalenir/space-bot@dev
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          app_secret: ${{ secrets.APP_SECRET }}
+          organisation_url: ${{ secrets.ORGANISATION_URL }}
+          chat_title: general
+          project: ${{ secrets.MAIN_PROJECT }}
+          issue_numbers: ${{ secrets.ISS_NUMBERS }}
+          tag: Cool tag
+          message: Space-bot action testing was succsessfull!
+
+      - name: Check outputs
+        run: |
+          test "${{ steps.selftest.outputs.result }}" == "Done!"
